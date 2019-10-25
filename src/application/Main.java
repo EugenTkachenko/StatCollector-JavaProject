@@ -2,9 +2,9 @@ package application;
 
 import java.util.Arrays;
 
-import application.collector.MeanCollector;
-import application.collector.MedianCollector;
-import application.collector.ModeCollector;
+import application.calculate.MeanStrategy;
+import application.calculate.MedianStrategy;
+import application.calculate.ModeStrategy;
 import application.collector.StatCollector;
 
 public class Main {
@@ -12,9 +12,7 @@ public class Main {
 	
 	public static void main(String args[]) {
 		
-		MeanCollector meanCollector = new  MeanCollector();
-		MedianCollector medianCollector = new MedianCollector();
-		ModeCollector modeCollector = new ModeCollector();
+		StatCollector statCollector = new StatCollector();
 		
 		int[] numbers1 = new int[15];
 		for(int i=0; i<numbers1.length; i++) {
@@ -25,14 +23,8 @@ public class Main {
 		System.out.println("Numbers: "+Arrays.toString(numbers1));
 		System.out.println();
 		
-		meanCollector.add(numbers1);
-		printStatParameter(meanCollector);
-		
-		medianCollector.add(numbers1);
-		printStatParameter(medianCollector);
-		
-		modeCollector.add(numbers1);
-		printStatParameter(modeCollector);
+		statCollector.add(numbers1);
+		printStatParameters(statCollector);
 		
 		
 		int[] numbers2 = new int[16];
@@ -45,28 +37,27 @@ public class Main {
 		System.out.println(","+Arrays.toString(numbers2));
 		System.out.println();
 		
-		meanCollector.add(numbers2);
-		printStatParameter(meanCollector);
+		statCollector.add(numbers2);
+		printStatParameters(statCollector);
 		
-		medianCollector.add(numbers2);
-		printStatParameter(medianCollector);
-		
-		modeCollector.add(numbers2);
-		printStatParameter(modeCollector);
 		
 	}
 	
 	
+	static MeanStrategy meanStrategy = new MeanStrategy();
+	static MedianStrategy medianStrategy = new MedianStrategy();
+	static ModeStrategy modeStrategy = new ModeStrategy();
 	
-	static void printStatParameter(StatCollector statCollector) {
+	static void printStatParameters(StatCollector statCollector) {
 		
-		if(statCollector instanceof MeanCollector) {
-			System.out.println("Mean : "+statCollector.getStatParameter());
-		}else if(statCollector instanceof MedianCollector){
-			System.out.println("Median : "+statCollector.getStatParameter());
-		}else if(statCollector instanceof ModeCollector) {
-			System.out.println("Mode : "+statCollector.getStatParameter());
-		}
+		statCollector.setCalculationStrategy(meanStrategy);
+		System.out.println("Mean : " + statCollector.getStatParameter());
+		
+		statCollector.setCalculationStrategy(medianStrategy);
+		System.out.println("Median : " + statCollector.getStatParameter());
+		
+		statCollector.setCalculationStrategy(modeStrategy);
+		System.out.println("Mode : "+statCollector.getStatParameter());
 		
 	}
 	

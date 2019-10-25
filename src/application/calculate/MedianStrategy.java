@@ -1,26 +1,18 @@
-package application.collector;
+package application.calculate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MedianCollector extends GetValueImplementation{
+public class MedianStrategy implements CalculationStrategy{
 
-	private final List<Integer> numberList = new ArrayList<Integer>();
-	
 
 	@Override
-	protected void addSome(int... numbers) {
-		
+	public double calculate(int[] numbers) {
+		List<Integer> numberList = new ArrayList<Integer>();
 		for(Integer number: numbers) {
 			numberList.add(number);
 		}
-	}
-
-
-
-	@Override
-	protected double calculate() {
 		Collections.sort(numberList);
 		
 		int size = numberList.size();
@@ -33,11 +25,5 @@ public class MedianCollector extends GetValueImplementation{
 		}
 	}
 
-
-
-	@Override
-	public boolean isEmpty() {
-		return numberList.isEmpty();
-	}
 	
 }
