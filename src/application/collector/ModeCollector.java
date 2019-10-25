@@ -1,27 +1,26 @@
 package application.collector;
 
-import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ModeCollector extends AddSomeImplementation{
+public class ModeCollector extends GetValueImplementation{
 
 	private final Map<Integer, Integer> numberFrequencyMap = new HashMap<Integer, Integer>();
 
 	
 	@Override
-	public void add(int number) {
+	public void addSome(int...numbers) {
 		
-		int frequency = numberFrequencyMap.containsKey(number)?(numberFrequencyMap.get(number)+1):1;
+		for(Integer number: numbers) {
+			int frequency = numberFrequencyMap.containsKey(number)?(numberFrequencyMap.get(number)+1):1;
+			numberFrequencyMap.put(number, frequency);
+		}
 		
-		numberFrequencyMap.put(number, frequency);
 	}
 
 
 	@Override
-	public double getStatParameter() throws EmptyStackException{
-		super.getStatParameter();
-		
+	protected double calculate() {
 		int mode = 0;
 		int maxFrequency=0;
 		for(Map.Entry<Integer, Integer> entrySet: numberFrequencyMap.entrySet()) {
@@ -33,10 +32,9 @@ public class ModeCollector extends AddSomeImplementation{
 		return mode;
 	}
 
-
+	
 	@Override
 	public boolean isEmpty() {
 		return numberFrequencyMap.isEmpty();
 	}
-
 }

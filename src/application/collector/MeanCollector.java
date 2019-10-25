@@ -1,32 +1,33 @@
 package application.collector;
 
-import java.util.EmptyStackException;
-
-public class MeanCollector extends AddSomeImplementation{
+public class MeanCollector extends GetValueImplementation{
 
 	private int size = 0;
 	private int sum = 0;
-	
+
+
 	@Override
-	public void add(int number) {
-		size++;
-		sum+=number;
+	protected void addSome(int... numbers) {
+		for(Integer number: numbers) {
+			size++;
+			sum+=number;
+		}
 	}
 
 
 	@Override
-	public double getStatParameter() throws EmptyStackException{
-		super.getStatParameter();
-		
+	protected double calculate() {
 		return ((double)sum)/size;
-		
 	}
+
 
 
 	@Override
 	public boolean isEmpty() {
 		return size==0;
 	}
+
+	
 	
 	
 }

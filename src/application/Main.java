@@ -5,6 +5,7 @@ import java.util.Arrays;
 import application.collector.MeanCollector;
 import application.collector.MedianCollector;
 import application.collector.ModeCollector;
+import application.collector.StatCollector;
 
 public class Main {
 
@@ -15,28 +16,62 @@ public class Main {
 		MedianCollector medianCollector = new MedianCollector();
 		ModeCollector modeCollector = new ModeCollector();
 		
-		int[] numbers = new int[]{-2, 5, 7, 1, -4, 0, 3, 6, 3,-2, 10, 100, 3, 1, 16, 7, 9, 11};
+		int[] numbers1 = new int[15];
+		for(int i=0; i<numbers1.length; i++) {
+			numbers1[i]=random(-5, 50);
+		}
 		
-		meanCollector.add(numbers);
-		medianCollector.add(numbers);
-		modeCollector.add(numbers);
 		
-//		int sum = 0;
-//		for (int i = 0; i < numbers.length; i++) {
-//			sum+=numbers[i];
-//		}
-//		double mean = (double)sum/numbers.length;
-//		System.out.println("mean: "+mean);
-		
-		System.out.println("Numbers: "+Arrays.toString(numbers));
+		System.out.println("Numbers: "+Arrays.toString(numbers1));
 		System.out.println();
-		System.out.println("Mean : "+meanCollector.getStatParameter());
-		System.out.println("Median : "+medianCollector.getStatParameter());
-		System.out.println("Mode : "+modeCollector.getStatParameter());
 		
+		meanCollector.add(numbers1);
+		printStatParameter(meanCollector);
+		
+		medianCollector.add(numbers1);
+		printStatParameter(medianCollector);
+		
+		modeCollector.add(numbers1);
+		printStatParameter(modeCollector);
+		
+		
+		int[] numbers2 = new int[16];
+		for(int i=0; i<numbers1.length; i++) {
+			numbers2[i]=random(-5, 10);
+		}
+		
+		System.out.println();
+		System.out.print("Numbers: "+Arrays.toString(numbers1));
+		System.out.println(","+Arrays.toString(numbers2));
+		System.out.println();
+		
+		meanCollector.add(numbers2);
+		printStatParameter(meanCollector);
+		
+		medianCollector.add(numbers2);
+		printStatParameter(medianCollector);
+		
+		modeCollector.add(numbers2);
+		printStatParameter(modeCollector);
 		
 	}
 	
 	
 	
+	static void printStatParameter(StatCollector statCollector) {
+		
+		if(statCollector instanceof MeanCollector) {
+			System.out.println("Mean : "+statCollector.getStatParameter());
+		}else if(statCollector instanceof MedianCollector){
+			System.out.println("Median : "+statCollector.getStatParameter());
+		}else if(statCollector instanceof ModeCollector) {
+			System.out.println("Mode : "+statCollector.getStatParameter());
+		}
+		
+	}
+	
+	
+	static int random(int from, int to) {
+		return from+(int)(to*Math.random());
+	}
 }
